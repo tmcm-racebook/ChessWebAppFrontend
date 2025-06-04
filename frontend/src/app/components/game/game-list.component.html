@@ -1,0 +1,41 @@
+<div class="game-list-controls">
+  <label>
+    Sort by:
+    <select (change)="onSortChange($event)">
+      <option value="date" [selected]="sortOption === 'date'">Date</option>
+      <option value="status" [selected]="sortOption === 'status'">Status</option>
+    </select>
+  </label>
+  <label>
+    Status:
+    <select (change)="onStatusFilterChange($event)">
+      <option value="" [selected]="!statusFilter">All</option>
+      <option value="active" [selected]="statusFilter === 'active'">Active</option>
+      <option value="finished" [selected]="statusFilter === 'finished'">Finished</option>
+      <option value="draw" [selected]="statusFilter === 'draw'">Draw</option>
+    </select>
+  </label>
+</div>
+
+<ng-container *ngIf="loading$ | async as loading">
+  <div *ngIf="loading" class="loading">Loading games...</div>
+  <div *ngIf="!loading">
+    <div *ngIf="games.length === 0" class="empty">No games found.</div>
+    <div class="game-list" *ngIf="games.length > 0">
+      <div *ngFor="let game of games" class="game-row">
+        <span class="status-indicator" [ngClass]="getStatusClass(game.status)"></span>
+        <span class="game-id">#{{ game.id }}</span>
+        <span class="players">{{ game.playerWhite }} vs {{ game.playerBlack }}</span>
+        <span class="status">{{ game.status | titlecase }}</span>
+        <span class="last-move">Last move: {{ game.lastMoveTimestamp | date:'short' }}</span>
+        <button *ngIf="game.status === 'active'" (click)="resumeGame(game)">Resume</button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="pagination-controls">
+  <button (click)="onPrevPage()" [disabled]="page === 1">Previous</button>
+  <span>Page {{ page }}<span *ngIf="totalPages > 1"> / {{ totalPages }}</span></span>
+  <button (click)="onNextPage()" [disabled]="page === totalPages">Next</button>
+</div> 

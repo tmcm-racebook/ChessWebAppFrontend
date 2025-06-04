@@ -1,0 +1,75 @@
+<div class="board-controls">
+  <button class="flip-board-btn" (click)="orientation = orientation === 'white' ? 'black' : 'white'; generateBoard();">
+    <span class="icon" aria-hidden="true">
+      <!-- Simple chessboard SVG icon -->
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;"><rect width="20" height="20" rx="4" fill="#fff" stroke="#b58863" stroke-width="1.5"/><rect x="0.5" y="0.5" width="4" height="4" fill="#b58863"/><rect x="8.5" y="0.5" width="4" height="4" fill="#b58863"/><rect x="16.5" y="0.5" width="3" height="4" fill="#b58863"/><rect x="4.5" y="4.5" width="4" height="4" fill="#b58863"/><rect x="12.5" y="4.5" width="4" height="4" fill="#b58863"/><rect x="0.5" y="8.5" width="4" height="4" fill="#b58863"/><rect x="8.5" y="8.5" width="4" height="4" fill="#b58863"/><rect x="16.5" y="8.5" width="3" height="4" fill="#b58863"/><rect x="4.5" y="12.5" width="4" height="4" fill="#b58863"/><rect x="12.5" y="12.5" width="4" height="4" fill="#b58863"/></svg>
+    </span>
+    Flip Board ({{ orientation | titlecase }} on bottom)
+  </button>
+  <!-- <button (click)="newGame()" [disabled]="moveHistory.length === 0">New Game</button> -->
+  <!-- <button (click)="undoMove()" [disabled]="moveHistory.length === 0 || gameOver">Undo Move</button> -->
+</div>
+<div class="game-status-bar">
+  {{ gameStatus }}
+</div>
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+<div *ngIf="promotionPending" class="promotion-selector">
+  <span>Promote pawn to:</span>
+  <button *ngFor="let p of getPromotionOptions()" (click)="onPromotionSelect(p)">
+    {{ getPieceSymbol(p) }}
+  </button>
+</div>
+<div class="chess-board-with-captures">
+  <div class="captured-pieces-vertical-group">
+    <div class="captured-pieces-vertical captured-black">
+      <div class="captured-title">Black</div>
+      <div class="captured-pieces-vertical-list">
+        <ng-container *ngFor="let piece of getCapturedPieces('b')">
+          <span class="captured-piece-icon piece-icon">{{ getPieceSymbol(piece) }}</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="captured-pieces-vertical captured-white">
+      <div class="captured-title">White</div>
+      <div class="captured-pieces-vertical-list">
+        <ng-container *ngFor="let piece of getCapturedPieces('w')">
+          <span class="captured-piece-icon piece-icon">{{ getPieceSymbol(piece) }}</span>
+        </ng-container>
+      </div>
+    </div>
+</div>
+<div class="chess-board">
+  <div *ngFor="let row of board; let rowIdx = index" class="board-row">
+    <div *ngFor="let square of row; let colIdx = index"
+         class="board-square {{ getSquareColor(rowIdx, colIdx) }}"
+         [class.selected]="isSelected(rowIdx, colIdx)"
+         [class.valid-target]="isValidTarget(rowIdx, colIdx)"
+         (click)="onSquareClick(rowIdx, colIdx)">
+        <span *ngIf="square" class="piece-icon">{{ getPieceSymbol(square) }}</span>
+      </div>
+    </div>
+    <div *ngIf="promotionPending" class="promotion-selector">
+      <div *ngFor="let piece of getPromotionOptions()" (click)="onPromotionSelect(piece)">
+        {{ getPieceSymbol(piece) }}
+      </div>
+    </div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </div>
+  <div class="move-history-panel enhanced-move-history">
+  <div class="move-history-title">Move History</div>
+  <div class="move-history-list">
+      <div *ngFor="let move of fullMoveHistory; let i = index" class="move-history-row" [class.last-move]="i === fullMoveHistory.length - 1">
+        <span class="move-number" *ngIf="i % 2 === 0">{{ (i/2)+1 }}.</span>
+        <span class="move-piece">{{ getMovePieceSymbol(move) }}</span>
+        <span class="move-player">{{ move.player }}:</span>
+        <span class="move-coords">{{ move.source }}-{{ move.target }}</span>
+        <span *ngIf="move.promotedTo">={{ move.promotedTo.toUpperCase() }}</span>
+        <span *ngIf="move.isCheck">+</span>
+        <span *ngIf="move.isCheckmate">#</span>
+        <span *ngIf="move.isCapture" class="move-capture">×</span>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,6 @@
+<ng-container *ngIf="!gameId || game">
+  <app-chess-board [orientation]="orientation" [game]="game"></app-chess-board>
+</ng-container>
+<ng-container *ngIf="gameId && !game">
+  <div class="error">Failed to load game.</div>
+</ng-container>

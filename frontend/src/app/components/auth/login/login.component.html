@@ -1,0 +1,25 @@
+<div *ngIf="loginError" class="alert alert-danger">{{ loginError }}</div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input id="username" type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': submitted && f['username'].errors}" />
+    <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+      <div *ngIf="f['username'].errors?.['required']">Username is required.</div>
+      <div *ngIf="f['username'].errors?.['minlength']">Username must be at least 3 characters.</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password" class="form-control" [ngClass]="{'is-invalid': submitted && f['password'].errors}" />
+    <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+      <div *ngIf="f['password'].errors?.['required']">Password is required.</div>
+      <div *ngIf="f['password'].errors?.['pattern']">Password must be at least 6 characters and contain both letters and numbers.</div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="loading">
+    <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span *ngIf="!loading">Login</span>
+  </button>
+</form>

@@ -1,0 +1,329 @@
+.board-controls {
+  margin-bottom: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.error-message {
+  color: #fff;
+  background: #e53935;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  animation: shake 0.2s;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.promotion-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+.promotion-selector button {
+  font-size: 1.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #888;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.promotion-selector button:hover {
+  background: #f0d9b5;
+}
+
+.chess-board {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 350px;
+  max-width: 520px;
+  aspect-ratio: 1 / 1;
+  margin: 0 2rem;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background: #222;
+  font-size: 2.2rem;
+}
+
+.board-row {
+  display: flex;
+  flex: 1 1 0;
+}
+
+.board-square {
+  width: 12.5%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  user-select: none;
+  transition: box-shadow 0.1s;
+}
+
+.board-square.light {
+  background: #f0d9b5;
+}
+
+.board-square.dark {
+  background: #b58863;
+}
+
+.board-square.selected {
+  box-shadow: 0 0 0 4px #2196f3 inset;
+  z-index: 1;
+}
+
+.board-square.valid-target {
+  box-shadow: 0 0 0 4px #4caf50 inset;
+  z-index: 1;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .chess-board {
+    max-width: 98vw;
+  }
+}
+
+.game-status-bar {
+  background: #333;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+// Move history panel styles
+.enhanced-move-history {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  max-width: 350px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.move-history-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+.move-history-list {
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.move-history-row {
+  display: flex;
+  align-items: center;
+  padding: 2px 0;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.move-history-row.last-move {
+  background: #e0f7fa;
+  font-weight: bold;
+}
+.move-number {
+  width: 2.2em;
+  color: #888;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 0.2em;
+}
+.move-piece {
+  width: 1.5em;
+  text-align: center;
+  font-size: 1.2em;
+  margin-right: 0.2em;
+}
+.move-player {
+  color: #1976d2;
+  font-weight: 500;
+  margin-right: 0.2em;
+}
+.move-squares {
+  font-family: 'Fira Mono', monospace;
+  margin-right: 0.2em;
+}
+.move-promotion {
+  color: #43a047;
+  margin-right: 0.2em;
+}
+.move-check {
+  color: #e65100;
+  margin-right: 0.1em;
+}
+.move-checkmate {
+  color: #d32f2f;
+  margin-right: 0.1em;
+}
+.move-capture {
+  color: #c62828;
+  margin-left: 0.1em;
+  font-size: 1.1em;
+}
+.captured-pieces-panel {
+  margin-top: 0.5rem;
+  background: #f0f4c3;
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+}
+.captured-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  color: #333;
+}
+.captured-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+.captured-label {
+  width: 3.5em;
+  color: #555;
+  font-weight: 500;
+}
+.captured-pieces {
+  font-size: 1.2em;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 400px) {
+  .chess-board {
+    max-width: 98vw;
+  }
+  .move-history-panel {
+    max-width: 98vw;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.25rem 0.5rem 0.25rem;
+  }
+  .board-controls, .promotion-selector {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+.chess-board-with-captures {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  width: 100vw;
+  max-width: none;
+  margin: 0 auto;
+}
+
+.captured-pieces-vertical-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.captured-pieces-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40px;
+  margin: 0 0.5rem 0.5rem 0.5rem;
+  background: #f0f4c3;
+  border-radius: 8px;
+  padding: 0.5rem 0.2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  justify-content: flex-start;
+}
+.captured-pieces-vertical-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 200px;
+  overflow-y: auto;
+  gap: 0.2em;
+}
+.captured-piece-icon {
+  font-size: 1.5em;
+  margin: 0.1em 0;
+  line-height: 1.1;
+}
+@media (max-width: 800px) {
+  .chess-board-with-captures {
+    flex-direction: column;
+    align-items: center;
+  }
+  .captured-pieces-vertical {
+    height: auto;
+    max-height: unset;
+  }
+  .captured-pieces-vertical-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+    max-height: unset;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+.board-controls .flip-board-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 0.6em 1.4em;
+  border: none;
+  border-radius: 2em;
+  background: linear-gradient(90deg, #f0d9b5 0%, #b58863 100%);
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+  outline: none;
+}
+.board-controls .flip-board-btn:focus {
+  box-shadow: 0 0 0 3px #2196f3, 0 2px 8px rgba(0,0,0,0.10);
+}
+.board-controls .flip-board-btn:hover {
+  background: linear-gradient(90deg, #ffe7b0 0%, #c69c6d 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+.board-controls .flip-board-btn .icon {
+  font-size: 1.3em;
+  margin-right: 0.2em;
+  vertical-align: middle;
+}
+
+/* Use a chess font for consistent Unicode chess piece rendering */
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols&display=swap'); */
+.piece-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  display: inline-block;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  transition: filter 0.15s;
+} 

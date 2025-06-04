@@ -1,0 +1,50 @@
+<div class="home-container">
+  <ng-container *ngIf="isLoggedIn; else loginPrompt">
+    <div *ngIf="!showNewGameButton">
+      <button class="play-btn" (click)="onPlay()">
+        <span class="icon">&#9658;</span> Play
+      </button>
+    </div>
+    <div *ngIf="showNewGameButton">
+      <div class="game-type-select">
+        <button class="type-btn" [class.selected]="gameType === 'computer'" (click)="selectGameType('computer')">
+          <span class="icon">&#128101;</span> Play vs Computer
+        </button>
+        <!-- <button class="type-btn" [class.selected]="gameType === 'online'" (click)="selectGameType('online')">
+          <span class="icon">&#128101;</span> Play Online
+        </button> -->
+      </div>
+      <div class="new-game-container">
+        <button class="new-game-btn" (click)="onNewGame()" [disabled]="loadingNewGame || !gameType">
+          <span class="icon">&#9812;</span>
+          <span *ngIf="!loadingNewGame">New Game</span>
+          <span *ngIf="loadingNewGame">Creating...</span>
+        </button>
+      </div>
+      <div *ngIf="hasExistingGames && resumableGames.length > 0" class="resume-list">
+        <div class="resume-list-title">Resume a Game</div>
+        <div *ngFor="let game of resumableGames" class="resume-item">
+          <div class="resume-info">
+            <span>Game ID: {{game.id}}</span>
+            <span>Status: {{game.status}}</span>
+            <span *ngIf="game.lastMoveTimestamp">Last Move: {{game.lastMoveTimestamp | date:'short'}}</span>
+          </div>
+          <button class="resume-btn" (click)="onResumeGame(game.id)">
+            <span class="icon">&#8634;</span> Resume
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #loginPrompt>
+    <div class="login-prompt">
+      <p>You must be logged in to play.</p>
+      <button class="play-btn" (click)="onLogin()">
+        <span class="icon">&#128274;</span> Login
+      </button>
+    </div>
+  </ng-template>
+  <div *ngIf="error$.value" class="error-message">
+    {{ error$.value }}
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<header class="header">
+  <div class="header-content">
+    <div class="logo">
+      <a routerLink="/">Chess Game</a>
+    </div>
+    <nav class="nav-links">
+      <a routerLink="/home" routerLinkActive="active">Home</a>
+      <!-- <a routerLink="/game" routerLinkActive="active">Play</a> -->
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/login" routerLinkActive="active">Login</a>
+        <a routerLink="/register" routerLinkActive="active">Register</a>
+      </ng-container>
+      <ng-container *ngIf="isAuthenticated">
+        <span class="user-actions">
+          <span class="user-icon">👤</span>
+          <span class="login-status">Logged in</span>
+          <button class="logout-btn" (click)="logout()">Logout</button>
+        </span>
+      </ng-container>
+    </nav>
+  </div>
+</header>
