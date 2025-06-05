@@ -39,12 +39,16 @@ export class RegisterComponent {
     const { username, email, password } = this.registerForm.value;
     this.authService.register(username, email, password).subscribe({
       next: (res: any) => {
+        console.log('Registration success response:', res);
         this.loading = false;
         this.registerSuccess = 'Registration successful! You can now log in.';
+        this.registerForm.reset();
+        this.submitted = false;
       },
       error: (err: any) => {
+        console.log('Registration error response:', err);
         this.loading = false;
-        this.registerError = err.error || 'Registration failed. Please try again.';
+        this.registerError = err.error?.message || 'Registration failed. Please try again.';
       }
     });
   }
